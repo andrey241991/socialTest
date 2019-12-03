@@ -1,0 +1,9 @@
+.siteBar{
+    width: 200px;
+    display: grid;
+    grid-template-areas:
+    "t"
+    "c";
+
+    grid-template-rows: 1fr 1fr;
+}
