@@ -1,6 +1,7 @@
 
-const siteBarReducer = (state, action) => {
+let initialState = {};
 
+const siteBarReducer = (state = initialState, action) => {
     return state;
 }
 

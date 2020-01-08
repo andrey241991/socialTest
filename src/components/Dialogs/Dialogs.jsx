@@ -1,35 +1,38 @@
 import React from 'react'
 import s from './Dialogs.module.css'
-import { NavLink } from 'react-router-dom'
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { updateNewMessageBodyActionCreator, addMessageActionCreator } from '../../redux/dialogs-reducer';
-
+// import {Redirect} from 'react-router-dom';
 
 const Dialogs = (props) => {
-    let state = props.store.getState().messagesPage;
+
 
     const dialogElements =
-        state.dialogs.map(dialog =>
+        props.dialogsPage.dialogs.map(dialog =>
             <DialogItem name={dialog.name} id={dialog.id} />
         );
 
     const messagesElements =
-        state.messages.map(message =>
+        props.dialogsPage.messages.map(message =>
             <Message message={message.message} />
         );
 
     const addMessage = () => {
-        props.store.dispatch(addMessageActionCreator());
+        props.sendMessage();
     }
 
     const updateNewMessageBody = (e) => {
         let text = e.target.value;
-        props.store.dispatch(updateNewMessageBodyActionCreator(text));
+        props.updateNewMessageBody(text);
     }
+
+    // if (!props.isAuth) {
+    //     return <Redirect to='/login' />
+    // }
 
     return (
         <div className={s.dialogs}>
+            {alert(props.isAuth)}
             <div className={s.dialogItems}>
                 {dialogElements}
             </div>
@@ -39,7 +42,7 @@ const Dialogs = (props) => {
             <textarea
                 className={s.messageTextArea}
                 onChange={updateNewMessageBody}
-                value={state.newMessageBody}></textarea>
+                value={props.dialogsPage.newMessageBody}></textarea>
             <div>
                 <button onClick={addMessage}>Add New Message</button>
             </div>

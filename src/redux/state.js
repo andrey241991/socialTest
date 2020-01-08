@@ -1,4 +1,6 @@
 import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import siteBarReducer from "./siteBar-reducer";
 
 let store = {
     _state: {
@@ -44,8 +46,8 @@ let store = {
     },
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action);
-        this._state.messagesPage = profileReducer(this._state.messagesPage, action);
-        this._state.siteBarPage = profileReducer(this._state.siteBarPage, action);
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+        this._state.siteBarPage = siteBarReducer(this._state.siteBarPage, action);
         this._callSubscriber(this._state);
 
     },

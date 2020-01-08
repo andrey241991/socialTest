@@ -1,19 +1,39 @@
 const ADD_MESSAGE = 'ADD_MESSAGE';
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY';
 
-const dialogsReducer = (state, action) => {
-    if (action.type === ADD_MESSAGE) {
-        let newMessage = { message:state.messagesPage.newMessageBody };
-        state.messagesPage.messages.push(newMessage);
-        state.messagesPage.newMessageBody = '';
-    } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-        state.messagesPage.newMessageBody = action.newMessageBody;
+let initialState = {
+    dialogs: [
+        { name: 'Dimich', id: '1' },
+        { name: 'Dimich2', id: '2' }],
+    messages: [
+        { message: 'hi22' },
+        { message: 'hi33' }],
+    newMessageBody: '',
+}
+
+const dialogsReducer = (state = initialState, action) => {
+
+    switch (action.type) {
+        case ADD_MESSAGE:
+            let newMessage = { message: state.newMessageBody };
+            return {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, newMessage],
+            }
+        case UPDATE_NEW_MESSAGE_BODY:
+            return {
+                ...state,
+                newMessageBody: action.newMessageBody
+            }
+        default:
+            return state;
     }
-    return state;
+
 }
 
 
-export const addMessageActionCreator = () => ({ type: ADD_MESSAGE})
+export const addMessageActionCreator = () => ({ type: ADD_MESSAGE })
 export const updateNewMessageBodyActionCreator = (text) => ({ type: UPDATE_NEW_MESSAGE_BODY, newMessageBody: text })
 
 
