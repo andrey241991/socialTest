@@ -1,7 +1,8 @@
-import { usersAPI } from '../api/api';
+import { usersAPI, profileAPI } from '../api/api';
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
+const SET_STATUS = 'SET_STATUS';
 
 
 let initialState = {
@@ -11,6 +12,7 @@ let initialState = {
         { message: 'Hi, how are you', like: '232' },
         { message: 'Hi, how are you', like: '242' }],
     profile: null,
+    status: ''
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -32,6 +34,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profile: action.profile,
             }
+            case SET_STATUS:
+                return {
+                    ...state,
+                    status: action.status,
+                }
         default:
             return state;
     }
@@ -41,6 +48,7 @@ const profileReducer = (state = initialState, action) => {
 export const addPostActionCreator = () => ({ type: ADD_POST })
 export const updateNewPostTextActionCreator = (text) => ({ type: UPDATE_NEW_POST_TEXT, newPostText: text })
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile: profile })
+export const setStatus = (status) => ({ type: SET_STATUS, status: status })
 
 export const setUserProfileThunk = (userId) => {
     return (dispatch) => {
@@ -50,5 +58,26 @@ export const setUserProfileThunk = (userId) => {
             });
     }
 }
+
+export const getStatus = (userId) => {
+    return (dispatch) => {
+        profileAPI.getStatus(userId)
+            .then(response => {
+                console.log('response 266', response)
+                dispatch(setStatus(response));
+            });
+    }
+}
+
+export const updateStatus = (status) => {
+    return (dispatch) => {
+        profileAPI.updateStatus(status);
+            // .then(response => {
+            //     dispatch(setStatus(response.data));
+            //     console.log('response response', response)
+            // });
+    }
+}
+
 
 export default profileReducer;

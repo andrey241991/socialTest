@@ -1,8 +1,9 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
 import Preloader from '../../common/Preloader/Preloader';
-import {Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import ProfileStatus from '../ProfileStatus';
+import ProfileStatusWithHooks from '../ProfileStatusWithHooks';
 
 const ProfileInfo = (props) => {
 
@@ -27,7 +28,8 @@ const ProfileInfo = (props) => {
       <div className={s.descriptionBlock}>
         ava + description
         </div>
-        <ProfileStatus status='Hello'/>
+      <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
+      {/* <ProfileStatus status={this.props.status} /> */}
     </div>
   );
 }

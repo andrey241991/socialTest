@@ -5,7 +5,7 @@ let initialState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: true,
+    isAuth: false,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -28,6 +28,7 @@ export const setAuthUserThunk = () => {
     return (dispatch) => {
         usersAPI.authMe()
             .then(data => {
+                console.log('data authMe', data);
                 if (data.resultCode === 0) {
                     let { id, login, email } = data.data;
                     dispatch(setAuthUserData(id, email, login));

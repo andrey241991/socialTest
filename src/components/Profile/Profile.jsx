@@ -5,10 +5,15 @@ import SiteBar from '../SiteBar/SiteBar';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 const Profile = (props) => {
-  console.log(props);
+  console.log('props Profile', props);
   return (
     <div>
-      <ProfileInfo profile={props.profile} isAuth={props.isAuth} />
+      <ProfileInfo
+        profile={props.profile}
+        isAuth={props.isAuth}
+        status={props.status}
+        updateStatus={props.updateStatus}
+      />
       <MyPostsContainer />
     </div>
   );

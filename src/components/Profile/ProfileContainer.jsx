@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Profile.module.css';
 import { connect } from 'react-redux';
-import { setUserProfileThunk } from '../../redux/profile-reducer';
+import { setUserProfileThunk, getStatus, updateStatus } from '../../redux/profile-reducer';
 import axios from 'axios';
 import Preloader from '../common/Preloader/Preloader';
 import Profile from './Profile';
@@ -17,17 +17,23 @@ class ProfileContainer extends React.Component {
     let userId = this.props.match.params.userId;
     console.log('componentDidMount userId', userId);
     this.props.setUserProfileThunk(userId);
+    this.props.getStatus(userId);
   }
 
   render() {
     return (
-      <Profile profile={this.props.profile} isAuth={this.props.isAuth} />
+      <Profile
+        profile={this.props.profile}
+        isAuth={this.props.isAuth}
+        status={this.props.status}
+        updateStatus={this.props.updateStatus} />
     );
   }
 }
 
 let mapStateToProps = (state) => ({
   profile: state.profilePage.profile,
+  status: state.profilePage.status,
 })
 
 // let AuthRedirectComponent = WithAuthRedirect(ProfileContainer);
@@ -35,10 +41,10 @@ let mapStateToProps = (state) => ({
 // export default connect(mapStateToProps, { setUserProfileThunk })(WithUrlDataContainerComponent);
 
 const WithUrlDataContainerComponent = compose(
-  connect(mapStateToProps, { setUserProfileThunk }),
+  connect(mapStateToProps, { setUserProfileThunk, getStatus, updateStatus }),
   withRouter,
   WithAuthRedirect
 )(ProfileContainer);
 
 
-export default  WithUrlDataContainerComponent
+export default WithUrlDataContainerComponent
